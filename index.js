@@ -3,7 +3,8 @@ const port = 8081;
 const app = express();
 const db = require('./config/mongoose');
 const users = require('./models/user');
-const expressLayouts = require('express-ejs-layouts');
+const expressLayouts = require('express-ejs-layouts');  //installed using npm install express-ejs-layouts
+const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
 
 app.use(express.static('./assets'));
 
@@ -16,7 +17,7 @@ app.set('layout extractScripts', true);
 app.use('/', require('./routes'));
 
 // set up view engine
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');  //installed using npm install ejs
 app.set('views', './views');
 
 app.listen(port, (err)=>{

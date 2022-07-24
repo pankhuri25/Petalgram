@@ -22,3 +22,8 @@ module.exports.login = function(req, res){
 module.exports.create = function(req, res){
     // TODO
 }
+
+// login and create a session for the user
+module.exports.createSession = function(req, res){
+    // TODO
+}
