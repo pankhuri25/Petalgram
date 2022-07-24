@@ -18,3 +18,7 @@ module.exports.login = function(req, res){
         title: 'Petalgram User Login'
     });
 }
+// get the sign up data
+module.exports.create = function(req, res){
+    // TODO
+}
