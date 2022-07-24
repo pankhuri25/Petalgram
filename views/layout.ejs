@@ -1,0 +1,22 @@
+<!-- Layout (blueprint) which will be followed by all the pages in the app -->
+
+<html>
+    <head>
+        <title>
+            <%= title %>
+        </title>
+    </head>
+    <body>
+        <!-- Header section (will be same for all pages)-->
+        <%- include('_header') %>
+
+        <!-- Main body (the variable part) -->
+        <%- body %>
+
+        <!-- Footer section (will be same for all pages) -->
+        <%- include('_footer') %>
+
+        <!-- JS Script in the end -->
+        <%- script %>
+    </body>
+</html>
