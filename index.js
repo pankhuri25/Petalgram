@@ -6,6 +6,13 @@ const users = require('./models/user');
 const expressLayouts = require('express-ejs-layouts');  //installed using npm install express-ejs-layouts
 const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
 
+// reading through POST requests (req.body)
+app.use(express.urlencoded());
+
+// when the request is coming, cookie needs to be parsed
+app.use(cookieParser());
+
+// static files(css, js, images)
 app.use(express.static('./assets'));
 
 // extract style and scripts from sub pages into the layout
