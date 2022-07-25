@@ -7,7 +7,8 @@ const expressLayouts = require('express-ejs-layouts');  //installed using npm in
 const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
 
 // reading through POST requests (req.body)
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 
 // when the request is coming, cookie needs to be parsed
 app.use(cookieParser());
