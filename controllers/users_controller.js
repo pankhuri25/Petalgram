@@ -2,9 +2,32 @@ const User = require('../models/user');
 
 // render the User Profile after Logging In
 module.exports.profile = function(req, res){
-    return res.render('user_profile',  {
-        title: 'User Profile'
-    });
+
+    console.log(req.cookies); //// to check what all cookies are present
+    
+    if(req.cookies.user_id){
+        User.findById(req.cookies.user_id, (err, user)=>{
+            if(err){
+                console.log('Error fetching the User from DB:', err);
+                return;
+            }
+            if(user){
+                return res.render('user_profile',  {
+                    title: 'User Profile',
+                    // user: user
+                    // OR:
+                    name: user.name,
+                    email: user.email
+                });
+            }
+            return res.redirect('/users/login');
+        });
+    }
+    /// removing else didn't work: (gave error: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client)
+    // because Javascript callbacks are asynchronous and hence the return statement was getting executed even before the rendering part. Use async await to optimize it.
+    // For now, use else to prevent return execution.
+    else
+        return res.redirect('/users/login');
 }
 
 // render the Sign Up page
@@ -69,11 +92,11 @@ module.exports.createSession = function(req, res){
         if(user){
             // 1. Handle password mismatch condition, if any.
             if(user.password!=req.body.password){
-                console.log('Password did not match. Please login with correct password!')
-                res.redirect('back');
+                console.log('Password did not match. Please login with correct password!');
+                return res.redirect('/users/login');
             }
             // 2. If matched, Create Session
-            res.cookie('user_id', user.id);
+            res.cookie('user_id', user.id);  //coming from DB (_id)
             return res.redirect('/users/profile');
         }
         // Handle user not found
@@ -81,8 +104,6 @@ module.exports.createSession = function(req, res){
         // 2. Otherwise, redirect to Signup for new user creation
         else{
             return res.redirect('/users/sign-up');
-        }
-        
+        } 
     });
-
 }
