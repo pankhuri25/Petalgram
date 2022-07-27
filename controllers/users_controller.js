@@ -110,10 +110,7 @@ module.exports.createSession = function(req, res){
 
 module.exports.logOut = function(req, res){
     if(req.cookies.user_id){
-        res.clearCookie(req.cookies.user_id);
-        console.log(res.cookies);
-        // req.cookie('user_id', '');
-        // console.log(req.cookies);
+        res.clearCookie("user_id");
         return res.redirect('/users/login');
     }
 }
