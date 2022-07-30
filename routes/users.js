@@ -4,7 +4,8 @@ const passport = require('passport');
 
 const usersController = require('../controllers/users_controller');
 
-router.get('/profile', usersController.profile);
+// make proile page accessible only when the user is authenticated, hence adding middleware as 2nd argument
+router.get('/profile', passport.checkAuthentication, usersController.profile);
 router.get('/sign-up', usersController.signUp);
 router.get('/login', usersController.login);
 router.post('/log-out', usersController.logOut);

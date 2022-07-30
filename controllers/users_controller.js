@@ -17,6 +17,9 @@ module.exports.signUp = function(req, res){
     //// we can change the value of cookie from our code too:
     // res.cookie('user_id', '23');
 
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_signup', {
         title: 'Petalgram Sign Up'
     });
@@ -24,6 +27,9 @@ module.exports.signUp = function(req, res){
 
 // render the Login Page
 module.exports.login = function(req, res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_login', {
         title: 'Petalgram User Login'
     });

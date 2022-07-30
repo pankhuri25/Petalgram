@@ -39,8 +39,11 @@ app.use(session({
     // TODO change the secret before deployment to production
     // to encode cookie, we will use the secret 
     secret:'somethinggg',
+    // when there is a request (session) which is not initialized, that means the user is not logged in and the identity has not been established, then we do not want to add extra data in the cookie, hence set to false
     saveUninitialized: false,
+    // we dont want to save the session data again n again
     resave: false,
+    // set cookie expiration time
     cookie: {
         // number of minutes the session will stay logged in before cookie expiration (logout)
         maxAge: (1000 * 60 * 100)
@@ -48,7 +51,6 @@ app.use(session({
         // 60 is in seconds
         // 100 is in minutes
         // therefore, it totals to 60,00,000ms
-
     }
 }));
 
@@ -57,6 +59,8 @@ app.use(passport.initialize());
 
 // passport also helps in maintaining express sessions
 app.use(passport.session());
+
+app.use(passport.setAuthenticatedUser);
 
 // use express router
 app.use('/', require('./routes'));
