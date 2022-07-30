@@ -6,6 +6,11 @@ const users = require('./models/user');
 const expressLayouts = require('express-ejs-layouts');  //installed using npm install express-ejs-layouts
 const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
 
+// used for session cookie (encryption)
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('passport-local');
+
 // reading through POST requests (req.body)
 // app.use(express.urlencoded());
 app.use(express.urlencoded({extended: true}));
@@ -27,6 +32,13 @@ app.use('/', require('./routes'));
 // set up view engine
 app.set('view engine', 'ejs');  //installed using npm install ejs
 app.set('views', './views');
+
+app.use(session({
+    name: 'Petalgram',
+    // TODO change the secret before deployment to production
+    secret:'somethinggg',
+    resa
+}))
 
 app.listen(port, (err)=>{
     if(err){
