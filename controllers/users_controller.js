@@ -58,4 +58,6 @@ module.exports.create = function(req, res){
 // login and create a session for the user
 module.exports.createSession = function(req, res){
     // TODO
+
+    // handle user authentication
 }
