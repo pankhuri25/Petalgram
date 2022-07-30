@@ -70,9 +70,26 @@ module.exports.createSession = function(req, res){
     return res.redirect('/');
 }
 
-module.exports.logOut = function(req, res){
-    if(req.cookies.user_id){
-        res.clearCookie("Petalgram");
-        return res.redirect('/users/login');
+module.exports.destroySession = function(req,res, next) {
+    
+    // logout function (asynchronous) is provided by passport js
+    // req.logout();
+    // return res.redirect('/');
+    req.logout(function(err) {
+    if (err) {
+        return next(err);
     }
+    res.redirect('/');
+    });
 }
+    
+    
+
+// // Manual LogOut Button
+
+// module.exports.logOut = function(req, res){
+//     if(req.cookies.user_id){
+//         res.clearCookie("Petalgram");
+//         return res.redirect('/users/login');
+//     }
+// }

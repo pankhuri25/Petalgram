@@ -1,3 +1,32 @@
 <header>
     Page header
+
+
+    <ul>
+        <!-- locals.user and user contain the same data and can be used interchangeably-->
+        <% if(locals.user) { %>
+            <li>
+                <%= user.name %>
+            </li>
+            <li>
+                <a href="/users/log-out">
+                    Log Out
+                </a>
+            </li>
+
+        <% } else { %>
+            <li> 
+                <a href="/users/login">
+                    Login
+                </a>
+            </li>
+            <li>
+                <a href="/users/sign-up">
+                    Sign Up
+                </a>
+            </li>
+        <% } %>
+
+    </ul>
+
 </header>

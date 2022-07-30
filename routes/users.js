@@ -8,7 +8,7 @@ const usersController = require('../controllers/users_controller');
 router.get('/profile', passport.checkAuthentication, usersController.profile);
 router.get('/sign-up', usersController.signUp);
 router.get('/login', usersController.login);
-router.post('/log-out', usersController.logOut);
+router.get('/log-out', usersController.destroySession);
 
 // create a user in DB using sign-up data
 router.post('/create', usersController.create);

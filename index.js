@@ -77,6 +77,7 @@ app.use(passport.initialize());
 // passport also helps in maintaining express sessions
 app.use(passport.session());
 
+// when the passport session is being used, authenticated user is also being set
 app.use(passport.setAuthenticatedUser);
 
 // use express router

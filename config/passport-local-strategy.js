@@ -14,7 +14,7 @@ passport.use(new LocalStrategy({
         usernameField: 'email'
     },
     // callback function with variables email and password because these two are in the schema 
-    // (done variable is inbuilt in passport, it reports back to passport.js)
+    // (done is the inbuilt CALLBACK function in passport, it reports back to passport.js)
     function(email, password, done){
         // find a user and establish the identity
         User.findOne({email: email}, function(err, user){
