@@ -42,7 +42,7 @@ passport.use(new LocalStrategy({
 
 // Put in user id from browser into the cookie and not the rest of the info (bcoz that's the only thing required to be encrypted)
 passport.serializeUser(function(user, done){
-    done(null, user.id);  //null: no error, user.id: set user id in encrypted format in cookie
+    done(null, user.id);  //null: no error, user.id: set user id in encrypted format (being done by express-session) in cookie
 });
 
 

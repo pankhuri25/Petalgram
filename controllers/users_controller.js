@@ -28,7 +28,7 @@ module.exports.login = function(req, res){
         title: 'Petalgram User Login'
     });
 }
-// get the sign up data
+// get the sign up data and create user in DB
 module.exports.create = function(req, res){
     // TODO
     if(req.body.password != req.body.confirm_password)
@@ -57,7 +57,9 @@ module.exports.create = function(req, res){
 
 // login and create a session for the user
 module.exports.createSession = function(req, res){
-    // TODO
-
-    // handle user authentication
+    
+    // user is logged in and we just need to redirect to home page
+    // session is created in passport.js itself.
+    // no need to handle authentication manually here
+    return res.redirect('/');
 }
