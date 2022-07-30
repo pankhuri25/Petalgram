@@ -1,17 +1,23 @@
 const express = require("express");
 const port = 8081;
 const app = express();
-const db = require('./config/mongoose');
+const db = require('./config/mongoose'); // installed using npm install mongoose
 const users = require('./models/user');
 const expressLayouts = require('express-ejs-layouts');  //installed using npm install express-ejs-layouts
 const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
 
 // used for session cookie encryption
-const session = require('express-session');
+const session = require('express-session'); // installed using npm install express-session
 
 // for authentication
-const passport = require('passport');
-const passportLocal = require('./config/passport-local-strategy');
+const passport = require('passport'); // installed using npm install passport
+const passportLocal = require('./config/passport-local-strategy'); // iinstalled using npm install passport-local
+
+// Our session cookie gets reset everytime our server restarts (npm start)
+// If a new code is deployed to the production server, all our users will be logged out
+// Use persistent storage (to keep the cookies in the server)
+// Hence, storein the Mongo DB
+const MongoStore = require('connect-mongo');  // after requiring, it takes up session as the argument
 
 // reading through POST requests (req.body)
 // app.use(express.urlencoded());
@@ -33,6 +39,7 @@ app.set('view engine', 'ejs');  //installed using npm install ejs
 app.set('views', './views');
 
 // middleware that takes in the cookie and encrypts it
+// mongo store is used to store the session cookie in the db
 app.use(session({
     // name of the cookie
     name: 'Petalgram',
@@ -51,7 +58,17 @@ app.use(session({
         // 60 is in seconds
         // 100 is in minutes
         // therefore, it totals to 60,00,000ms
+    },
+    store: MongoStore.create({
+        // mongoose.connection is in the variable db (which got exported from mongoose config file)
+        mongoUrl: "mongodb://localhost/users",
+        autoRemove: 'disabled'
+    },
+    function(err){
+        // either there is an error, or if not, then nothing should be shown (connect-mongodb setup ok)
+        console.log(err || 'connect-mongodb setup ok');
     }
+    )
 }));
 
 // express app to use the passport
