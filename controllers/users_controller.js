@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 // render the User Profile after Logging In
 module.exports.profile = function(req, res){
-    return res.render('user_profile',  {
+    return res.render('user-profile',  {
         title: 'User Profile'
     });
 }
@@ -62,4 +62,11 @@ module.exports.createSession = function(req, res){
     // session is created in passport.js itself.
     // no need to handle authentication manually here
     return res.redirect('/');
+}
+
+module.exports.logOut = function(req, res){
+    if(req.cookies.user_id){
+        res.clearCookie("Petalgram");
+        return res.redirect('/users/login');
+    }
 }

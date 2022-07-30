@@ -7,6 +7,7 @@ const usersController = require('../controllers/users_controller');
 router.get('/profile', usersController.profile);
 router.get('/sign-up', usersController.signUp);
 router.get('/login', usersController.login);
+router.post('/log-out', usersController.logOut);
 
 // create a user in DB using sign-up data
 router.post('/create', usersController.create);
