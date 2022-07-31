@@ -7,7 +7,7 @@ const expressLayouts = require('express-ejs-layouts');  //installed using npm in
 const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
 
 // used for converting scss/sass to system readable css
-const sassMiddleware = require ('node-sass-middleware');
+const sassMiddleware = require ('node-sass-middleware'); //installed using npm install node-sass-middleware
 
 app.use(sassMiddleware({
     src: './assets/scss',
