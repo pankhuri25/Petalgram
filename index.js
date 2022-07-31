@@ -6,6 +6,17 @@ const users = require('./models/user');
 const expressLayouts = require('express-ejs-layouts');  //installed using npm install express-ejs-layouts
 const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
 
+// used for converting scss/sass to system readable css
+const sassMiddleware = require ('node-sass-middleware');
+
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
+
 // used for session cookie encryption
 const session = require('express-session'); // installed using npm install express-session
 
