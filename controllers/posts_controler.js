@@ -15,4 +15,7 @@ module.exports.createPost = function(req, res){
             return res.redirect('back');
         });
     }
+    else{
+        console.log("Please login to post!");
+    }
 }
