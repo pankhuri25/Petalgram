@@ -27,7 +27,17 @@ module.exports.home = function(req, res){
     // which we were directly writing within find method 
     // but since the query got long due to populate method, 
     // we have to write it in exec method
-    Post.find({}).populate('user').exec(function(err,posts){
+    Post.find({})
+    // populate the user of post
+    .populate('user')
+    // populate the comments on post and the users who made the comment
+    .populate({
+        path: 'comments',
+        populate: {
+            path: 'user'
+        }
+    })
+    .exec(function(err,posts){
         return res.render('home',  {
             title: 'Petalgram Home',
             posts: posts
