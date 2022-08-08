@@ -28,3 +28,29 @@ module.exports.addComment = function(req, res){
         }
     });
 }
+
+// action to delete a comment
+module.exports.destroy = function(req, res){
+
+    // find if comment exists by checking if comment's id exists
+    Comment.findById(req.params.id, function (err, comment){
+
+        // check if comment's user matches the incoming id's user (commenter)
+        if(comment.user == req.user.id){
+
+            // before deleting the comment entirely, extract the Post's id on which the comment was made, because we have to remove this comment from Post schema's comments array 
+            let postId = comment.post;
+            // now, remove the comment from comment schema
+            comment.remove();
+
+            // now, find that post using postId and remove the comment from comment's array inside that particular post
+            // $pull is a way of pulling out (removing) a given thing (comment id here) : mongoose provides this syntax
+            Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}}, (err, post)=>{
+                return res.redirect('back');
+            });
+        }
+        else {
+            return res.redirect('back');
+        }
+    });
+}
