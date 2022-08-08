@@ -22,8 +22,17 @@
             <% for(post of posts) { %>
                 <li> 
                     <p>
+                        <!-- Checking if user exists and is the owner of the post itself, then he/she is allowed to see the delete option -->
+                        <% if (locals.user && (locals.user.id == post.user.id)) { %>
+                            <small>
+                                <!-- Delete button -->
+                                <a href="/posts/destroy/<%= post.id %>"> x </a>
+                            </small>
+                        <% } %>
+                        <!-- Show post's content -->
                         <%= post.content %>
                         <br>
+                        <!-- Show the user's name who posted it -->
                         <small><%= post.user.name %></small>
                         
                     </p>
@@ -56,3 +65,5 @@
     </div>
     
 </section>
+
+

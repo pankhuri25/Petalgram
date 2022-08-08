@@ -8,5 +8,6 @@ const postsController = require('../controllers/posts_controler');
 // 1. Passport authentication
 // 2. Not showing the form to submit a post
 router.post('/create-post', passport.checkAuthentication, postsController.createPost);
+router.get('/destroy/:id', passport.checkAuthentication, postsController.destroy);
 
 module.exports = router;
