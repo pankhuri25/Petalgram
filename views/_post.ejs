@@ -1,0 +1,34 @@
+<li> 
+    <p>
+        <!-- Checking if user exists and is the owner of the post itself, then he/she is allowed to see the delete option -->
+        <% if (locals.user && (locals.user.id == post.user.id)) { %>
+            <small>
+                <!-- Delete button -->
+                <a href="/posts/destroy/<%= post.id %>"> x </a>
+            </small>
+        <% } %>
+        <!-- Show post's content -->
+        <%= post.content %>
+        <br>
+        <!-- Show the user's name who posted it -->
+        <small><%= post.user.name %></small>
+        
+    </p>
+    <div class="post-comments">
+        <% if (locals.user) { %>
+        <form action="/comments/add-comment" id="new-comment-form" method="POST">
+            <textarea name="content" cols="30" rows="3" placeholder="Add a Comment.." required></textarea>
+            <input type="hidden" name="post" value="<%= post._id %>">
+            <input type="submit" value="Add Comment">
+        </form>
+        <% } %>
+
+        <div class="post-comments-list">
+            <ul id="post-comments-<%= post._id %>">
+                <% for(comment of post.comments) { %>
+                    <%- include('_comment') -%>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</li>
