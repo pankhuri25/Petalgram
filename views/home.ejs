@@ -1,41 +1,40 @@
-<h1> Home page </h1>
+<link rel="stylesheet" href="/css/home.css">
 
-<section id="feed-posts">
-    <h4>Posts</h4>
+<div id="home-container">
+    <section id="feed-posts">
+        <h4>Posts</h4>
 
-    <!-- Make the form only visible to the logged in user, 
-        so that nobody else has the right to post,
-        check if locals object contains user entity/key or not -->
+        <!-- Make the form only visible to the logged in user, 
+            so that nobody else has the right to post,
+            check if locals object contains user entity/key or not -->
 
-    <!-- But if someone knows HTML, they can use chrome developer tools and make their own form, 
-        to prevent that, apply a check on the controller level itself. 
-        Use passport's authentication check as the middleware inside routes before entering the controller-->
-    <% if (locals.user) { %>
-        <form action="/posts/create-post" id="new-post-form" method="POST">
-            <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required></textarea>
-            <input type="submit" value="Post">
-        </form>
-    <% } %>
+        <!-- But if someone knows HTML, they can use chrome developer tools and make their own form, 
+            to prevent that, apply a check on the controller level itself. 
+            Use passport's authentication check as the middleware inside routes before entering the controller-->
+        <% if (locals.user) { %>
+            <form action="/posts/create-post" id="new-post-form" method="POST">
+                <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required></textarea>
+                <input type="submit" value="Post">
+            </form>
+        <% } %>
 
-    <div>
-        <ul>
-            <% for(post of posts) { %>
-                <%- include ('_post') -%>
-            <% }  %>
-        </ul>
-    </div>
-    
-</section>
+        <div>
+            <ul>
+                <% for(post of posts) { %>
+                    <%- include ('_post') -%>
+                <% }  %>
+            </ul>
+        </div>
+    </section>
 
-<!-- Display User's Friends list -->
-<section id="user-friends">
-    <h4>Friends</h4>
-    <!-- Getting all users from home constroller -->
-    <% for(u of all_users) { %>
-        <p>
-            <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
-        </p>
-    <% } %>
-</section>
-
-
+    <!-- Display User's Friends list -->
+    <section id="user-friends">
+        <h4>Friends</h4>
+        <!-- Getting all users from home constroller -->
+        <% for(u of all_users) { %>
+            <p>
+                <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+            </p>
+        <% } %>
+    </section>
+</div>
