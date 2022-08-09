@@ -12,6 +12,22 @@ module.exports.profile = function(req, res){
     
 }
 
+// Update user profile functionality
+module.exports.update = function(req, res){
+    // check if user is authorized to update info
+    if (req.user.id == req.params.id){
+        // User.findByIdAndUpdate(req.params.id, {name: req.body.name, email: req.body.email})
+        // OR we can directly pass the whole req.body:
+        User.findOneAndUpdate(req.params.id, {insert: true})
+        User.findByIdAndUpdate(req.params.id ,req.body, (err, user)=>{
+            return res.redirect('back');
+        });
+    }
+    else {
+        return res.status(401).send('Unauthorized');
+    }
+}
+
 // render the Sign Up page
 module.exports.signUp = function(req, res){
 

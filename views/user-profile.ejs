@@ -1,8 +1,19 @@
 <h1> <%= title %> </h1>
 
-<h2><b>Name:</b> <%= profile_user.name %> </h2>
-<h2><b>Email ID:</b> <%= profile_user.email %></h2>
 
 <!-- <form action="/users/log-out" method="POST">
     <input type="submit" value="Log Out">
 </form> -->
+
+<% if(user.id == profile_user.id) { %>
+    <!-- If user matches, then show the update user profile form -->
+    <form action="/users/update/<%= profile_user.id %>" method="POST">
+        <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
+        <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
+        <input type="submit" value="Update">
+    </form>
+<% } else { %>
+    <!-- else show pnly profile info -->
+    <h2><b>Name:</b> <%= profile_user.name %> </h2>
+    <h2><b>Email ID:</b> <%= profile_user.email %></h2>
+<% } %>
