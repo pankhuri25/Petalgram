@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 
 // render home page
 
@@ -38,9 +39,14 @@ module.exports.home = function(req, res){
         }
     })
     .exec(function(err,posts){
-        return res.render('home',  {
-            title: 'Petalgram Home',
-            posts: posts
+
+        // find Users to display the list of users on home page
+        User.find({}, function(err, users){
+            return res.render('home',  {
+                title: 'Petalgram Home',
+                posts: posts,
+                all_users: users
+            });
         });
     });
 }
