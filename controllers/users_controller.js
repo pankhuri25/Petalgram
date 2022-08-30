@@ -62,7 +62,6 @@ module.exports.create = function(req, res){
     {
         res.redirect('back');
     }
-
     User.findOne({email: req.body.email}, (err, user)=>{
         if(err){
             console.log('Error finding the user:', err);

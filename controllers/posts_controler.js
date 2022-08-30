@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 module.exports.createPost = function(req, res){
     if(req.isAuthenticated()){
-        console.log(req.body);
+        // console.log(req.body);
         Post.create({
             content: req.body.content,
             user: req.user._id  // coming from req.user saved in locals inside setAuthenticatedUser method written in passport local strategy config
@@ -22,7 +22,7 @@ module.exports.createPost = function(req, res){
 }
 
 // Method to delete post
-module.exports.destroy = function(req, res){
+module.exports.destroyTemp = function(req, res){
 
     // Check if post exist, then perform deletion
     Post.findById(req.params.id, function(err, post){
@@ -46,4 +46,29 @@ module.exports.destroy = function(req, res){
         }
 
     });
+}
+
+
+// Writing the method in async await form:
+module.exports.destroy = async function(req, res){
+
+    try{
+        // Check if post exist, then perform deletion
+        let post = await Post.findById(req.params.id);
+        
+        if(post.user == req.user.id){
+            post.remove();
+
+            // deletes all comments based on given query
+            await Comment.deleteMany({post: req.params.id});
+            return res.redirect('back');
+        }
+        else {
+            return res.redirect('back');
+        }
+    }
+    catch (err){
+        console.log("error: ", err);
+        return;
+    }
 }

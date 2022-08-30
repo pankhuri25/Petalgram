@@ -21,7 +21,7 @@ const User = require('../models/user');
 
 // Using Populate Function:
 
-module.exports.home = function(req, res){
+module.exports.homeTemp = function(req, res){
 
     // populate the user of each post found in the DB.
     // exec is used to accomodate the callback function, 
@@ -50,3 +50,46 @@ module.exports.home = function(req, res){
         });
     });
 }
+
+// The above way of writing the code is chaining the callback functions (callback hell)
+
+// 2nd way using then method:
+// example:
+// Post.find().populate('comments').then(function(){});
+
+// 3rd way is by using promises:
+// example:
+// let posts = Post.find().populate('comments').exec(function(){});
+// posts.then();
+
+// 4th way by using async await (to avoid callback hell and function chaining):
+module.exports.home = async function(req, res){
+    try{
+        // populate the posts found in the DB.
+        let posts = await Post.find({})
+        // populate the user of post
+        .populate('user')
+        // populate the comments on post and the users who made the comment
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        })
+        
+        // find Users to display the list of users on home page
+        let users = await User.find({});
+        
+        return res.render('home',  {
+            title: 'Petalgram Home',
+            posts: posts,
+            all_users: users
+        });    
+    }
+    catch(err){
+        console.log("Error: ", err);
+        return;
+    }
+}
+
+

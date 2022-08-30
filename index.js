@@ -12,9 +12,9 @@ const sassMiddleware = require ('node-sass-middleware'); //installed using npm i
 app.use(sassMiddleware({
     src: './assets/scss',
     dest: './assets/css',
-    debug: true,
-    outputStyle: 'extended',
-    prefix: '/css'
+    debug: true, // to display info, errors on console
+    outputStyle: 'extended',  // extended for detailed info, compressed for crisp info
+    prefix: '/css' // prefix to tell the browser which folder to look at for CSS files
 }));
 
 // used for session cookie encryption

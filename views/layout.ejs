@@ -5,13 +5,22 @@
         <title>
             <%= title %>
         </title>
+
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/footer.css">
+        <%- style %>
+
     </head>
     <body>
         <!-- Header section (will be same for all pages)-->
         <%- include('_header') %>
 
-        <!-- Main body (the variable part) -->
-        <%- body %>
+        <main id="layout-main">
+            <!-- Main body (the variable part) -->
+            <%- body %>
+        </main>
+      
 
         <!-- Footer section (will be same for all pages) -->
         <%- include('_footer') %>
