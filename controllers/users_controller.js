@@ -84,6 +84,9 @@ module.exports.create = function(req, res){
 // login and create a session for the user
 module.exports.createSession = function(req, res){
     
+    // flash message to display on screen
+    req.flash("success", "Logged in Successfully!");
+
     // user is logged in and we just need to redirect to home page
     // session is created in passport.js itself.
     // no need to handle authentication manually here
@@ -92,13 +95,17 @@ module.exports.createSession = function(req, res){
 
 module.exports.destroySession = function(req,res, next) {
     
-    // logout function (asynchronous) is provided by passport js
+    // // logout function (asynchronous) is provided by passport js
     // req.logout();
     // return res.redirect('/');
+
     req.logout(function(err) {
     if (err) {
         return next(err);
     }
+    // flash message is set on req object and we need to pass it to response (res)
+    // hence create a custom middleware to pass it from req to res
+    req.flash("success", "Logged out Successfully!");
     res.redirect('/');
     });
 }

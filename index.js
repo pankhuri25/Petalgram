@@ -5,6 +5,8 @@ const db = require('./config/mongoose'); // installed using npm install mongoose
 const users = require('./models/user');
 const expressLayouts = require('express-ejs-layouts');  //installed using npm install express-ejs-layouts
 const cookieParser = require('cookie-parser');  //installed using npm install cookie-parser
+const flash = require('connect-flash'); // installed using npm install connect-flash
+const customMware = require('./config/middleware');
 
 // used for converting scss/sass to system readable css
 const sassMiddleware = require ('node-sass-middleware'); //installed using npm install node-sass-middleware
@@ -90,6 +92,12 @@ app.use(passport.session());
 
 // when the passport session is being used, authenticated user is also being set
 app.use(passport.setAuthenticatedUser);
+
+// flash uses session cookies, hence, using flash after the session is set for use
+// flash messages will be saved in the cookies where the session info is saved
+app.use(flash());
+// use custom middleware's method
+app.use(customMware.setFlash);
 
 // use express router
 app.use('/', require('./routes'));
