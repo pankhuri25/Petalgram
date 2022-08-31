@@ -10,9 +10,11 @@ module.exports.createPost = function(req, res){
             user: req.user._id  // coming from req.user saved in locals inside setAuthenticatedUser method written in passport local strategy config
         }, (err, post)=>{
             if(err){
-                console.log(`Error in creating post: $(err)`);
+                // console.log(`Error in creating post: $(err)`);
+                req.flash('error', err);
                 return;
             }
+            req.flash('success', 'Post published!');
             return res.redirect('back');
         });
     }
@@ -61,14 +63,17 @@ module.exports.destroy = async function(req, res){
 
             // deletes all comments based on given query
             await Comment.deleteMany({post: req.params.id});
+            req.flash('success', 'Post and the comments Deleted!');
             return res.redirect('back');
         }
         else {
+            req.flash('error', 'You can not deleted this post!');
             return res.redirect('back');
         }
     }
     catch (err){
-        console.log("error: ", err);
+        // console.log("error: ", err);
+        req.flash('error', err);
         return;
     }
 }

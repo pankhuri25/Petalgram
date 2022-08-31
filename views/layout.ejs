@@ -6,6 +6,10 @@
             <%= title %>
         </title>
 
+        <!-- Include Noty min css and min js CDN files: -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/layout.css">
         <link rel="stylesheet" href="/css/footer.css">
@@ -16,11 +20,14 @@
         <!-- Header section (will be same for all pages)-->
         <%- include('_header') %>
 
-        <% if(flash.success && flash.success.length > 0) { %>
+        <!-- Since this is very plain, we will replace this with NOTY -->
+        <!-- <% if(flash.success && flash.success.length > 0) { %>
             <h5>
                 <%= flash.success %>
             </h5>
-        <% } %>
+        <% } %> -->
+
+        <!-- Using Noty: -->
 
         <main id="layout-main">
             <!-- Main body (the variable part) -->
@@ -33,5 +40,27 @@
 
         <!-- JS Script in the end -->
         <%- script %>
+
+        <script>
+            <% if(flash.success && flash.success.length > 0) { %>
+                new Noty({
+                    theme: 'relax',
+                    text: '<%= flash.success %>',
+                    type: 'success', //color scheme
+                    layout: 'topRight',
+                    timeout: 1500
+                }).show();
+            <% } %>
+
+            <% if(flash.error && flash.error.length > 0) { %>
+                new Noty({
+                    theme: 'relax',
+                    text: '<%= flash.error %>',
+                    type: 'error', //color scheme
+                    layout: 'topRight',
+                    timeout: 1500
+                }).show();
+            <% } %>
+        </script>
     </body>
 </html>
