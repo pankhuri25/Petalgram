@@ -20,6 +20,7 @@ module.exports.update = function(req, res){
         // OR we can directly pass the whole req.body:
         User.findOneAndUpdate(req.params.id, {insert: true})
         User.findByIdAndUpdate(req.params.id ,req.body, (err, user)=>{
+            req.flash("success", 'User Profile Updated Successfully!');
             return res.redirect('back');
         });
     }
@@ -75,7 +76,8 @@ module.exports.create = function(req, res){
             });
         }
         else{
-            console.log('User Already Exists!');
+            // console.log('User Already Exists!');
+            req.flash("error", 'User Already Exists!');
             return res.redirect('/users/login');
         }
     });

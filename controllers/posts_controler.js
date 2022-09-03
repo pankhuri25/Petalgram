@@ -2,7 +2,7 @@ const Comment = require('../models/comment');
 const Post = require('../models/post');
 const User = require('../models/user');
 
-module.exports.createPost = function(req, res){
+module.exports.createPostTemp = function(req, res){
     if(req.isAuthenticated()){
         // console.log(req.body);
         Post.create({
@@ -20,6 +20,37 @@ module.exports.createPost = function(req, res){
     }
     else{
         console.log("Please login to post!");
+    }
+}
+
+module.exports.createPost = async function(req, res){
+
+    try{
+        if(req.isAuthenticated()){
+            // console.log(req.body);
+            let post = await Post.create({
+                content: req.body.content,
+                user: req.user._id  // coming from req.user saved in locals inside setAuthenticatedUser method written in passport local strategy config
+            });
+
+            // check if request is an AJAX (xhr type) request:
+            if(req.xhr){
+                // return response in the form of status for json type data
+                return res.status(200).json({
+                    data: {
+                        post : post,
+                    },
+                    message: "Post created!"
+                });
+            }
+
+            req.flash('success', 'Post published!');
+            return res.redirect('back');
+        }
+    }
+    catch(err){
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
 

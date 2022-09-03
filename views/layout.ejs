@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         
+        <!-- All pages should be able to use jquery, hence using inside layout, although we want to use in home.ejs -->
+        <!-- we want to create a home page which doesn't keep loading everytime a post is published. The post should be displayed without a reload. -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/layout.css">
         <link rel="stylesheet" href="/css/footer.css">
@@ -20,12 +24,12 @@
         <!-- Header section (will be same for all pages)-->
         <%- include('_header') %>
 
-        <!-- Since this is very plain, we will replace this with NOTY -->
         <!-- <% if(flash.success && flash.success.length > 0) { %>
             <h5>
                 <%= flash.success %>
             </h5>
         <% } %> -->
+        <!-- Since this is very plain, we will replace this with NOTY -->
 
         <!-- Using Noty: -->
 
