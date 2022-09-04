@@ -67,6 +67,8 @@ module.exports.home = async function(req, res){
     try{
         // populate the posts found in the DB.
         let posts = await Post.find({})
+        // sort in reverse chronological order (recent post on top)
+        .sort('-createdAt')
         // populate the user of post
         .populate('user')
         // populate the comments on post and the users who made the comment
