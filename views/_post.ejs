@@ -1,10 +1,10 @@
-<li> 
+<li id="post-<%= post._id %>"> 
     <p>
         <!-- Checking if user exists and is the owner of the post itself, then he/she is allowed to see the delete option -->
         <% if (locals.user && (locals.user.id == post.user.id)) { %>
             <small>
                 <!-- Delete button -->
-                <a href="/posts/destroy/<%= post.id %>"> x </a>
+                <a class="delete-post-button" href="/posts/destroy/<%= post.id %>"> x </a>
             </small>
         <% } %>
         <!-- Show post's content -->
