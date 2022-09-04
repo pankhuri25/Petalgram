@@ -17,6 +17,7 @@
                     let newPost = newPostDom(content.data.post);
                     // append the post on top (prepend)
                     $('#posts-list-container > ul').prepend(newPost);
+                    req.flash('success', 'Post published!');
                     deletePost($(' .delete-post-button', newPost));
                 },
                 error: function(error){
@@ -60,18 +61,20 @@
                 </li>`)
     }
 
-
-
     // method to delete post from DOM
     let deletePost = function(deleteLink){
+        // works only if the link is clicked
         $(deleteLink).click(function(e){
+            // prevent natural deletion flow 
             e.preventDefault();
 
             $.ajax({
                 type: 'get',
                 url: $(deleteLink).prop('href'),
                 success: function(content){
+                    // delete the post using post-id
                     $(`#post-${content.data.post_id}`).remove();
+                    req.flash('success', 'Post and the comments Deleted!');
                 },
                 error: function(error){
                     console.log(error.responseText);
@@ -79,8 +82,6 @@
             });
         });
     }
-
-
 
     createPost();
 }
