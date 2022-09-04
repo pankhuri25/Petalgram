@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-const postsController = require('../controllers/posts_controler');
+const postsController = require('../controllers/posts_controller');
 
 // Applying 2 levels of check to prevent anonymous user penetration
 // 1. Passport authentication

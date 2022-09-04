@@ -17,7 +17,6 @@
                     let newPost = newPostDom(content.data.post);
                     // append the post on top (prepend)
                     $('#posts-list-container > ul').prepend(newPost);
-                    req.flash('success', 'Post published!');
                     deletePost($(' .delete-post-button', newPost));
                 },
                 error: function(error){
@@ -74,12 +73,12 @@
                 success: function(content){
                     // delete the post using post-id
                     $(`#post-${content.data.post_id}`).remove();
-                    req.flash('success', 'Post and the comments Deleted!');
                 },
                 error: function(error){
                     console.log(error.responseText);
                 }
             });
+            // req.flash('success', 'Post and the comments Deleted!');
         });
     }
 
