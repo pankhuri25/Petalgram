@@ -15,7 +15,7 @@ module.exports.addCommentTemp = function(req, res){
                 post: req.body.post  // coming from home.ejs where name=post was given
             }, (err, comment)=>{
                 if(err){
-                    console.log(`Error in adding comment: $(err)`);
+                    console.log(`Error in adding comment: ${err}`);
                     return;
                 }
                 // saving comments inside post schema for the given post
@@ -44,16 +44,33 @@ module.exports.addComment = async function(req, res){
                 user: req.user._id,  // coming from req.user saved in locals inside setAuthenticatedUser method written in passport local strategy config
                 post: req.body.post  // coming from home.ejs where name=post was given
             });
+
             // saving comments inside post schema for the given post
             post.comments.push(comment);
             // saving final version of post model
             post.save();
+            
+            // check if request is an AJAX (xhr type) request:
+            if(req.xhr){
 
+                // Similar for comments to fetch the user's id!
+                comment = await comment.populate('user');
+                // return response in the form of status for json type data
+                return res.status(200).json({
+                    data: {
+                        comment : comment
+                    },
+                    message: "Comment added!"
+                });
+            }
+
+            req.flash('success', 'Comment posted!');
             return res.redirect('/');
         }
     }
     catch(err){
         console.log("Error: ", err);
+        req.flash('error', err);
         return;
     }
 }
@@ -103,14 +120,25 @@ module.exports.destroy = async function(req, res){
             // $pull is a way of pulling out (removing) a given thing (comment id here) : mongoose provides this syntax
             let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
             
+            if(req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment_id: req.params.id
+                    },
+                    message: 'Comment deleted!'
+                });
+            }
+            req.flash('success', 'Comment deleted!');
             return res.redirect('back');
         }
         else {
+            req.flash('error', 'Unauthorized');
             return res.redirect('back');
         }
     }
     catch(err){
         console.log("Error: ", err);
+        req.flash('error', err);
         return;
     }
 }

@@ -27,7 +27,7 @@ module.exports.createPost = async function(req, res){
 
     try{
         if(req.isAuthenticated()){
-            // console.log(req.body);
+            console.log(req.body);
             let post = await Post.create({
                 content: req.body.content,
                 user: req.user._id  // coming from req.user saved in locals inside setAuthenticatedUser method written in passport local strategy config
@@ -35,6 +35,10 @@ module.exports.createPost = async function(req, res){
 
             // check if request is an AJAX (xhr type) request:
             if(req.xhr){
+                // if we want to populate just the name of the user,
+                // (we'll not want to send the password in the API), this is how we do it!
+                post = await post.populate('user');
+                console.log("line 41.....");
                 // return response in the form of status for json type data
                 return res.status(200).json({
                     data: {

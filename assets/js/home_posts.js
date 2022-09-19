@@ -9,7 +9,7 @@
         
             // manually submit using ajax:
             $.ajax({
-                type: 'post',
+                type: 'POST',
                 url: '/posts/create-post',
                 data: newPostForm.serialize(), //converts FORM data into Json format
                 success: function(content){
@@ -18,9 +18,24 @@
                     // append the post on top (prepend)
                     $('#posts-list-container > ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));
+
+                    new Noty({
+                        theme: 'relax',
+                        text: "Post Published!",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                    }).show();
                 },
                 error: function(error){
                     console.log(error.responseText);
+                    new Noty({
+                        theme: 'relax',
+                        text: 'Error creating post!',
+                        type: 'error', //color scheme
+                        layout: 'topRight',
+                        timeout: 1500
+                    }).show();
                 }
             });
         });
@@ -73,14 +88,45 @@
                 success: function(content){
                     // delete the post using post-id
                     $(`#post-${content.data.post_id}`).remove();
+
+                    new Noty({
+                        theme: 'relax',
+                        text: "Post Deleted!",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500   
+                    }).show();
                 },
                 error: function(error){
                     console.log(error.responseText);
+                    new Noty({
+                        theme: 'relax',
+                        text: 'Error in deleting Post!',
+                        type: 'error', //color scheme
+                        layout: 'topRight',
+                        timeout: 1500
+                    }).show();
                 }
             });
             // req.flash('success', 'Post and the comments Deleted!');
         });
     }
 
+    // loop over all the existing posts on the page 
+    // (when the window loads for the first time) 
+    // and call the delete post method on delete link of each, 
+    // also add AJAX (using the class we've created) to the delete button of each
+    let convertPostsToAjax=function(){
+        $('#posts-list-container>ul>li').each(function(){
+            deletePost($(' .delete-post-button',$(this)));  
+            
+            // get the post's id by splitting the id attribute
+            let postId = $(this).prop('id').split("-")[1]
+            new PostCommentsss(postId);
+        });   
+    }
     createPost();
+    convertPostsToAjax();
+    // createPost();
+
 }

@@ -16,7 +16,9 @@
     </p>
     <div class="post-comments">
         <% if (locals.user) { %>
-        <form action="/comments/add-comment" id="new-comment-form" method="POST">
+            <!-- let's give an id to the new comment form,
+                we'll also need to make the same changes in home_posts.js where we're adding a post to the page -->
+        <form action="/comments/add-comment" id="post-<%= post._id %>-comments-form" method="POST">
             <textarea name="content" cols="30" rows="3" placeholder="Add a Comment.." required></textarea>
             <input type="hidden" name="post" value="<%= post._id %>">
             <input type="submit" value="Add Comment">
@@ -32,3 +34,5 @@
         </div>
     </div>
 </li>
+
+<!-- <script src="/js/home_comments.js"></script> -->
